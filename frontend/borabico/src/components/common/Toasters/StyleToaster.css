@@ -1,0 +1,18 @@
+.custom-toast-error,
+.custom-toast-success,
+.custom-toast-info {
+  background-color: #fff;
+  color: #212121;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+}
+
+.Toastify__progress-bar--error {
+  background: #ce1a11ff;
+}
+
+.Toastify__toast-body {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
