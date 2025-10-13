@@ -13,8 +13,7 @@ import {
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 
 function Header() {
-  const { handleLogout } = useHeader();
-  const [isLogged] = useState(true);
+  const { isLogged, handleLogout } = useHeader();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
