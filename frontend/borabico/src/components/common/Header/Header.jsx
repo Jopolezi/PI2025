@@ -1,58 +1,82 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import * as S from "./styledHeader";
 import { Link } from "react-router-dom";
-import { useHeader, useHeaderVisible } from "../../../hooks/useHeader";
-import { IoHome, IoBriefcase } from "react-icons/io5";
+import { useHeader } from "../../../hooks/useHeader";
+import {
+  BriefcaseBusiness,
+  Plus,
+  User,
+  ChevronDown,
+  ChevronUp,
+  LogOut,
+} from "lucide-react";
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 
 function Header() {
-  const { isVisible } = useHeaderVisible();
-  const { isLogged } = useHeader();
+  const { handleLogout } = useHeader();
+  const [isLogged] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <>
-      <S.Header isVisible={isVisible}>
-        <S.Logo>
-          <Link to="/">
-            <S.Image src="/borabico.ico" alt="Logo Borabico" />
-          </Link>
+    <S.Header>
+      <S.Logo>
+        <Link to="/">
+          <S.Image src="/borabico.ico" alt="Logo Borabico" />
+        </Link>
 
-          <S.Slogan>
-            Bicos <S.Span>rápidos</S.Span>, oportunidades <S.Span>reais</S.Span>.
-          </S.Slogan>
-        </S.Logo>
+        <S.Slogan>
+          Bicos <S.Span>rápidos</S.Span>, oportunidades <S.Span>reais</S.Span>.
+        </S.Slogan>
+      </S.Logo>
 
+      {isLogged ? (
+        <S.Navbar>
+          <S.Items to="/vagas">
+            <BriefcaseBusiness size={18} />
+            Vagas
+          </S.Items>
+          <S.Items to="/publicar">
+            <Plus size={18} />
+            Publicar vaga
+          </S.Items>
+
+          <DropdownMenu.Root
+            open={isOpen}
+            onOpenChange={setIsOpen}
+            modal={false}
+          >
+            <S.Trigger>
+              <S.Photo>
+                <User size={18} />
+              </S.Photo>
+              <S.Flex>
+                Eu
+                {isOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+              </S.Flex>
+            </S.Trigger>
+            <S.Content>
+              <DropdownMenu.Item asChild>
+                <S.Item to="/perfil">
+                  <User size={16} />
+                  Perfil
+                </S.Item>
+              </DropdownMenu.Item>
+              <DropdownMenu.Item asChild>
+                <S.Item as="button" onClick={handleLogout}>
+                  <LogOut size={16} />
+                  Sair
+                </S.Item>
+              </DropdownMenu.Item>
+            </S.Content>
+          </DropdownMenu.Root>
+        </S.Navbar>
+      ) : (
         <S.Buttons>
           <S.Register to="/cadastrar">Cadastre-se agora</S.Register>
-
           <S.Login to="/entrar">Entrar</S.Login>
         </S.Buttons>
-      </S.Header>
-
-      {isLogged && (
-        <>
-          <S.Header isVisible={isVisible}>
-            <S.Logo>
-              <Link to="/">
-                <S.Image src="/borabico.ico" alt="Logo Borabico" />
-              </Link>
-
-              <S.Slogan>
-                Bicos <S.Span>rápidos</S.Span>, oportunidades <S.Span>reais</S.Span>.
-              </S.Slogan>
-            </S.Logo>
-
-          <S.Navbar>
-            <S.NavList>
-              <S.NavItem><S.NavLink to="/inicio"><IoHome />Início</S.NavLink></S.NavItem>
-              <S.NavItem><S.NavLink to="/vagas">Vagas</S.NavLink></S.NavItem>
-              <S.NavItem><S.NavLink to="/vagas"><IoBriefcase />Vagas</S.NavLink></S.NavItem>
-            </S.NavList>
-          </S.Navbar>
-            
-          </S.Header>
-        </>
       )}
-    </>
+    </S.Header>
   );
 }
 

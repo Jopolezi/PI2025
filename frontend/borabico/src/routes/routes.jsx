@@ -30,7 +30,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "feed",
+        path: "vagas",
         element: <Feed />,
       },
     ],

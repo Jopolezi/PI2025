@@ -41,7 +41,7 @@ function Register() {
                 <S.InputContent>
                   <S.InputTitle>Nome</S.InputTitle>
                   <Input
-                    {...register("firstName", {
+                    {...register("name", {
                       required: "Este campo é obrigatório.",
                       minLength: {
                         value: 2,
@@ -54,15 +54,15 @@ function Register() {
                     })}
                     type="text"
                     placeholder="Nome"
-                    name="firstName"
+                    name="name"
                   />
-                  {errors.firstName && <S.InputError>{errors.firstName.message}</S.InputError>}
+                  {errors.name && <S.InputError>{errors.name.message}</S.InputError>}
                 </S.InputContent>
 
                 <S.InputContent>
                   <S.InputTitle>Sobrenome</S.InputTitle>
                   <Input
-                    {...register("lastName", {
+                    {...register("surname", {
                       required: "Este campo é obrigatório.",
                       minLength: {
                         value: 2,
@@ -75,9 +75,9 @@ function Register() {
                     })}
                     type="text"
                     placeholder="Sobrenome"
-                    name="lastName"
+                    name="surname"
                   />
-                  {errors.lastName && <S.InputError>{errors.lastName.message}</S.InputError>}
+                  {errors.surname && <S.InputError>{errors.surname.message}</S.InputError>}
                 </S.InputContent>
 
                 <S.InputContent>

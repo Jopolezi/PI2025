@@ -30,6 +30,7 @@ function useLogin() {
       toastSuccess("Bem-vindo de volta!")
 
       localStorage.setItem("token", token)
+      localStorage.setItem("userId", response.data.user.id);
 
       setTimeout(() => {
         navigate("/")

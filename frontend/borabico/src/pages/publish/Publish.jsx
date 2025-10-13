@@ -1,19 +1,23 @@
-import { useState } from "react"
-import * as SC from "./styledPublish"
+import { useState } from "react";
+import * as SC from "./styledPublish";
 import {
-  Calendar1, MapPin, Phone, CheckCircle, CircleAlert,
-} from "lucide-react"
-import { FaMoneyBills } from "react-icons/fa6"
-import { useForm, Controller } from "react-hook-form"
-import { category } from "@/data/category"
-import { payment } from "@/data/payment"
-import Select from "react-select"
-import { NumericFormat, PatternFormat } from "react-number-format"
-import axios from "axios"
-import { useNavigate } from "react-router-dom"
-import { PulseLoader } from "react-spinners"
-
-
+  Calendar1,
+  MapPin,
+  Phone,
+  CheckCircle,
+  CircleAlert,
+  Clock,
+  Clock8,
+} from "lucide-react";
+import { FaMoneyBills } from "react-icons/fa6";
+import { useForm, Controller } from "react-hook-form";
+import { category } from "@/data/category";
+import { payment } from "@/data/payment";
+import Select from "react-select";
+import { NumericFormat, PatternFormat } from "react-number-format";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { PulseLoader } from "react-spinners";
 
 export default function Publish() {
   const {
@@ -41,61 +45,64 @@ export default function Publish() {
       payment: null,
       urgency: false,
     },
-  })
+  });
 
-  const [loading, setLoading] = useState(false)
-  const navigate = useNavigate()
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const watchDescription = watch("description")?.length || 0
-  const watchAddress = watch(["street", "district", "city", "state"])
+  const watchDescription = watch("description")?.length || 0;
+  const watchAddress = watch(["street", "district", "city", "state"]);
 
   const onSubmit = async (data) => {
     try {
-    setLoading(true)
-        const response = await axios.post("http://localhost:3000/api/post", data)
+      setLoading(true);
+      const response = await axios.post("http://localhost:3000/api/post/postar", data);
+      console.log(data)
 
-        navigate("/feed")
-        } catch (error) {
-            console.error(error)
-            alert("Erro ao publicar vaga")
-        } finally {
-            setLoading(false)
-        }
+      navigate("/feed");
+    } catch (error) {
+      console.error(error);
+      alert("Erro ao publicar vaga");
+    } finally {
+      setLoading(false);
+    }
 
-    console.log("Dados do formulário:", data)
-    reset()
-  }
+    console.log("Dados do formulário:", data);
+    reset();
+  };
 
   const searchCEP = async (cep) => {
     try {
       const { data: cepData } = await axios.get(
         `https://viacep.com.br/ws/${cep}/json/`
-      )
+      );
 
       if (cepData.erro) {
         toast.error("CEP não encontrado", {
-                  position: "top-right",
-                  autoClose: 4000,
-                });
-        return
+          position: "top-right",
+          autoClose: 4000,
+        });
+        return;
       }
 
-      setValue("street", cepData.logradouro)
-      setValue("district", cepData.bairro)
-      setValue("city", cepData.localidade)
-      setValue("state", cepData.uf)
+      setValue("street", cepData.logradouro);
+      setValue("district", cepData.bairro);
+      setValue("city", cepData.localidade);
+      setValue("state", cepData.uf);
     } catch (error) {
-      console.error("Erro ao buscar CEP:", error)
-      toast.error("Erro ao buscar CEP")
+      console.error("Erro ao buscar CEP:", error);
+      toast.error("Erro ao buscar CEP");
     }
-  }
+  };
 
   return (
     <>
       <SC.Container>
         <SC.Content>
           <SC.Title>Publicar vaga</SC.Title>
-          <SC.Subtitle>Preencha os dados da sua vaga e encontre o candidato ideal *</SC.Subtitle>
+          <SC.Subtitle>
+            Preencha os dados da sua vaga e encontre o candidato ideal
+          </SC.Subtitle>
 
           <SC.Divider />
 
@@ -103,10 +110,13 @@ export default function Publish() {
             <SC.Group>
               <SC.Label>Título da vaga *</SC.Label>
               <SC.Input
-                {...register("title", { required: "Campo obrigatório"})}
+                {...register("title", { required: "Campo obrigatório" })}
                 placeholder="Adicione o título da vaga"
                 onInput={(e) => {
-                     e.target.value = e.target.value.replace(/[^A-Za-zÀ-ÖØ-öø-ÿ\s]/g, "");
+                  e.target.value = e.target.value.replace(
+                    /[^A-Za-zÀ-ÖØ-öø-ÿ\s]/g,
+                    ""
+                  );
                 }}
               />
               {errors.title && (
@@ -237,10 +247,11 @@ export default function Publish() {
                       placeholder="00000-000"
                       onBlur={(e) => searchCEP(e.target.value)}
                       onValueChange={(values) => {
-                      field.onChange(values.formattedValue)
+                        field.onChange(values.formattedValue);
                         if (values.value?.length === 8) {
-                           searchCEP(values.value) 
-                      }}}
+                          searchCEP(values.value);
+                        }
+                      }}
                       customInput={SC.MarginInput}
                     />
                   )}
@@ -309,15 +320,59 @@ export default function Publish() {
                   name="date"
                   control={control}
                   render={({ field }) => (
-                    <SC.MarginInput
+                    <PatternFormat
                       {...field}
-                      type="date"
-                      min={new Date().toISOString().split("T")[0]}
+                      format="##/##/####"
+                      placeholder="00/00/0000"
+                      customInput={SC.MarginInput}
                     />
                   )}
                 />
               </SC.Flex>
             </SC.Group>
+
+            {/* Future fields */}
+            {/* <SC.Group>
+              <SC.Label>Hora de início</SC.Label>
+              <SC.Flex>
+                <SC.Icon>
+                  <Clock />
+                </SC.Icon>
+                <Controller
+                  name="start"
+                  control={control}
+                  render={({ field }) => (
+                    <PatternFormat
+                      {...field}
+                      format="##:##"
+                      placeholder="00:00"
+                      customInput={SC.MarginInput}
+                    />
+                  )}
+                />
+              </SC.Flex>
+            </SC.Group>
+
+            <SC.Group>
+              <SC.Label>Hora de término</SC.Label>
+              <SC.Flex>
+                <SC.Icon>
+                  <Clock8 />
+                </SC.Icon>
+                <Controller
+                  name="finish"
+                  control={control}
+                  render={({ field }) => (
+                    <PatternFormat
+                      {...field}
+                      format="##:##"
+                      placeholder="00:00"
+                      customInput={SC.MarginInput}
+                    />
+                  )}
+                />
+              </SC.Flex>
+            </SC.Group> */}
 
             <SC.Group>
               <SC.Label>Telefone para contato *</SC.Label>
@@ -348,10 +403,7 @@ export default function Publish() {
 
             <SC.Important>
               <SC.ImportantContent>
-                <SC.Checkbox
-                  {...register("urgency")}
-                  type="checkbox"
-                />
+                <SC.Checkbox {...register("urgency")} type="checkbox" />
                 <SC.ImportantIcon>
                   <CircleAlert size={24} />
                 </SC.ImportantIcon>
@@ -373,13 +425,17 @@ export default function Publish() {
               </SC.SubmitTextbox>
 
               <SC.Submit type="submit" disabled={loading} loading={loading}>
-                {!loading && <CheckCircle size={16}/>}
-                {loading ? <PulseLoader color="#fff" loading={true} size={14} /> : "Publicar"}
+                {!loading && <CheckCircle size={16} />}
+                {loading ? (
+                  <PulseLoader color="#fff" loading={true} size={14} />
+                ) : (
+                  "Publicar"
+                )}
               </SC.Submit>
-            </SC.SubmitContainer>   
+            </SC.SubmitContainer>
           </SC.Form>
         </SC.Content>
       </SC.Container>
     </>
-  )
+  );
 }

@@ -1,67 +1,78 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { toast } from 'react-toastify';
-import { toastSuccess, toastError } from "@/components/common/Toasters/Toaster"
+import { toast } from "react-toastify";
+import { toastSuccess, toastError } from "@/components/common/Toasters/Toaster";
 
 function useRegister() {
-    const { register, handleSubmit, control, formState: { errors } } = useForm({
-        mode: 'onChange'
-    });
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({
+    mode: "onChange",
+  });
 
-    const navigate = useNavigate();
-    const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
-    const onSubmit = async (data) => {
-        try {
-            setLoading(true);
-            
-            const response = await axios.post('http://localhost:3000/api/auth/register', data);
-            
-            localStorage.setItem('token', response.data.token);
-            localStorage.setItem('userId', response.data.user.id);
+  const onSubmit = async (data) => {
+    try {
+      setLoading(true);
 
-            toastSuccess("Registro feito com sucesso!")
-
-            setTimeout(() => {
-                navigate('/perfil');
-                
-            }, 2500);
-
-        } catch (error) {
-            if (error.response) {
-                let errorMessage = 'Não foi possível realizar o cadastro.';
-
-                if (error.response.status === 400) {
-                    errorMessage = 'Preencha todos os campos corretamente.';
-                } else if (error.response.status === 409) {
-                    errorMessage = 'Email, CPF ou telefone já cadastrados.';
-                } else if (error.response.status === 500) {
-                    errorMessage = 'Erro interno do servidor. Tente novamente.';
-                }
-
-                toastError(errorMessage)
-
-                console.error('Erro do servidor:', error.response.data.message);
-            } else {
-                toastError("Erro de conexão")
-
-                console.error('Erro de rede:', error.message);
-            }
-        } finally {
-            setLoading(false);
+      const response = await axios.post(
+        "http://localhost:3000/api/auth/register",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-    };
+      );
 
-    return {
-        register,
-        handleSubmit,
-        errors,
-        onSubmit,
-        control,
-        loading
-    };
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("userId", response.data.user.id);
+
+      toastSuccess("Registro feito com sucesso!");
+
+      setTimeout(() => {
+        navigate("/perfil");
+      }, 2500);
+    } catch (error) {
+      if (error.response) {
+        let errorMessage = "Não foi possível realizar o cadastro.";
+
+        if (error.response.status === 400) {
+          errorMessage = "Preencha todos os campos corretamente.";
+        } else if (error.response.status === 409) {
+          errorMessage = "Email, CPF ou telefone já cadastrados.";
+        } else if (error.response.status === 500) {
+          errorMessage = "Erro interno do servidor. Tente novamente.";
+        }
+
+        toastError(errorMessage);
+
+        console.error("Erro do servidor:", error.response.data.message);
+      } else {
+        toastError("Erro de conexão");
+
+        console.error("Erro de rede:", error.message);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return {
+    register,
+    handleSubmit,
+    errors,
+    onSubmit,
+    control,
+    loading,
+  };
 }
 
 export default useRegister;

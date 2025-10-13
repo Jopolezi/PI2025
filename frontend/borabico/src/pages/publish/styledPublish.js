@@ -92,12 +92,20 @@ export const Input = styled.input`
   font-size: 16px;
   transition: all 0.5s;
   box-sizing: border-box;
+  color: ${C.colors.dark};
 
   &:focus,
   &:hover {
     border: 2px solid ${C.colors.red};
   }
+
+  &[type="date"], &[type="time"] {
+    &::-webkit-calendar-picker-indicator {
+      display: none;
+    }
+  }
 `;
+
 
 export const Textarea = styled.textarea`
   width: 100%;
@@ -237,7 +245,7 @@ export const ImportantContent = styled.div`
 `;
 
 export const ImportantIcon = styled.div`
-  color: orange;
+  color: ${C.colors.red};
   display: flex;
   align-items: center;
   flex-shrink: 0;
