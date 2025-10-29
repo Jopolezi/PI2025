@@ -1,4 +1,5 @@
 import { useState } from "react";
+import usePublish from "@/hooks/usePublish";
 import * as SC from "./styledPublish";
 import {
   Calendar1,
@@ -10,7 +11,7 @@ import {
   Clock8,
 } from "lucide-react";
 import { FaMoneyBills } from "react-icons/fa6";
-import { useForm, Controller } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import { category } from "@/data/category";
 import { payment } from "@/data/payment";
 import Select from "react-select";
@@ -24,76 +25,13 @@ export default function Publish() {
     register,
     handleSubmit,
     control,
-    formState: { errors },
-    watch,
-    setValue,
-    reset,
-  } = useForm({
-    defaultValues: {
-      title: "",
-      description: "",
-      value: "",
-      cep: "",
-      street: "",
-      district: "",
-      city: "",
-      state: "",
-      number: "",
-      date: "",
-      phone: "",
-      category: null,
-      payment: null,
-      urgency: false,
-    },
-  });
-
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-
-  const watchDescription = watch("description")?.length || 0;
-  const watchAddress = watch(["street", "district", "city", "state"]);
-
-  const onSubmit = async (data) => {
-    try {
-      setLoading(true);
-      const response = await axios.post("http://localhost:3000/api/post/postar", data);
-      console.log(data)
-
-      navigate("/feed");
-    } catch (error) {
-      console.error(error);
-      alert("Erro ao publicar vaga");
-    } finally {
-      setLoading(false);
-    }
-
-    console.log("Dados do formulário:", data);
-    reset();
-  };
-
-  const searchCEP = async (cep) => {
-    try {
-      const { data: cepData } = await axios.get(
-        `https://viacep.com.br/ws/${cep}/json/`
-      );
-
-      if (cepData.erro) {
-        toast.error("CEP não encontrado", {
-          position: "top-right",
-          autoClose: 4000,
-        });
-        return;
-      }
-
-      setValue("street", cepData.logradouro);
-      setValue("district", cepData.bairro);
-      setValue("city", cepData.localidade);
-      setValue("state", cepData.uf);
-    } catch (error) {
-      console.error("Erro ao buscar CEP:", error);
-      toast.error("Erro ao buscar CEP");
-    }
-  };
+    errors,
+    onSubmit,
+    loading,
+    watchDescription,
+    watchAddress,
+    searchCEP,
+  } = usePublish();
 
   return (
     <>
@@ -182,7 +120,6 @@ export default function Publish() {
                 <Controller
                   name="value"
                   control={control}
-                  rules={{ required: "Campo obrigatório" }}
                   render={({ field }) => (
                     <NumericFormat
                       {...field}
@@ -198,11 +135,6 @@ export default function Publish() {
                   )}
                 />
               </SC.Flex>
-              {errors.value && (
-                <span style={{ color: "red", fontSize: "14px" }}>
-                  {errors.value.message}
-                </span>
-              )}
             </SC.Group>
 
             <SC.Group>
@@ -312,23 +244,24 @@ export default function Publish() {
 
             <SC.Group>
               <SC.Label>Data *</SC.Label>
-              <SC.Flex>
-                <SC.Icon>
-                  <Calendar1 />
-                </SC.Icon>
-                <Controller
-                  name="date"
-                  control={control}
-                  render={({ field }) => (
-                    <PatternFormat
-                      {...field}
-                      format="##/##/####"
-                      placeholder="00/00/0000"
-                      customInput={SC.MarginInput}
-                    />
-                  )}
-                />
-              </SC.Flex>
+              <Controller
+                name="date"
+                control={control}
+                render={({ field }) => (
+                  <SC.Input
+                    type="date"
+                    min={new Date().toISOString().split("T")[0]}
+                    value={field.value || ""}
+                    onChange={(e) => field.onChange(e.target.value)}
+                  />
+                )}
+              />
+
+              {errors.date && (
+                <span style={{ color: "red", fontSize: "14px" }}>
+                  {errors.date.message}
+                </span>
+              )}
             </SC.Group>
 
             {/* Future fields */}
@@ -341,7 +274,7 @@ export default function Publish() {
                 <Controller
                   name="start"
                   control={control}
-                  render={({ field }) => (
+                  render={({ field }) => 
                     <PatternFormat
                       {...field}
                       format="##:##"
@@ -424,7 +357,7 @@ export default function Publish() {
                 </SC.SubmitSubtitle>
               </SC.SubmitTextbox>
 
-              <SC.Submit type="submit" disabled={loading} loading={loading}>
+              <SC.Submit type="submit" disabled={loading}>
                 {!loading && <CheckCircle size={16} />}
                 {loading ? (
                   <PulseLoader color="#fff" loading={true} size={14} />

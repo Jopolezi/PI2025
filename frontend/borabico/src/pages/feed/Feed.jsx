@@ -1,8 +1,12 @@
-import React from "react"
+import React, { useEffect } from "react"
 import * as S from "./styledFeed"
 import { MapPin, Calendar, DollarSign, Clock, AlertCircle, PhoneCall } from "lucide-react"
 
 export default function Feed() {
+    useEffect(() => {
+        document.title = "Vagas"
+    }, [])
+
     const mockJobs = [
         {
             id: 1,

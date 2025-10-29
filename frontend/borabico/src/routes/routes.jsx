@@ -9,6 +9,8 @@ import Register from "../pages/auth/register/Register";
 import Forgot from "../pages/auth/forgot/Forgot";
 import Publish from "../pages/publish/Publish";
 import Feed from "../pages/feed/Feed";
+import Post from "../pages/post/post";
+
 
 const router = createBrowserRouter([
   {
@@ -26,13 +28,27 @@ const router = createBrowserRouter([
       {
         path: "publicar",
         element: (
+          <ProtectedRoute>
           <Publish />
+          </ProtectedRoute>
         ),
       },
       {
         path: "vagas",
-        element: <Feed />,
+        element: ( 
+          <ProtectedRoute>
+          <Feed />
+          </ProtectedRoute>
+        ),
       },
+      {
+        path: "vagas/:id",
+        element: (
+          <ProtectedRoute>
+            <Post />
+          </ProtectedRoute>
+        ),
+      }
     ],
   },
   {

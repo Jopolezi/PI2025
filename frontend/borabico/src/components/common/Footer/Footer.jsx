@@ -10,7 +10,7 @@ function Footer() {
         <S.Image src="/public/borabico.ico" alt="Logo Borabico" />
       </S.Logo>
         <S.FooterText>
-          © {currentYear} Borabico. Todos os direitos reservados.
+          © 2025 - {currentYear} Borabico. Todos os direitos reservados.
         </S.FooterText>
     </S.Container>
   );

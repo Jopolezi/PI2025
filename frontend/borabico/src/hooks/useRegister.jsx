@@ -22,9 +22,19 @@ function useRegister() {
     try {
       setLoading(true);
 
+      const payload = {
+      firstName: data.name,
+      lastName: data.surname,
+      email: data.email,
+      cpf: data.cpf,
+      phone: data.phone,
+      password: data.password,
+      gender: data.gender
+    };
+
       const response = await axios.post(
         "http://localhost:3000/api/auth/register",
-        data,
+        payload,
         {
           headers: {
             "Content-Type": "application/json",

@@ -1,5 +1,5 @@
 export const payment = [
-    { value: 'hours', label: 'Por hora' },
-    { value: 'day', label: 'Por dia' },
-    { value: 'project', label: 'Por projeto' }
-]
+  { value: "Hora", label: "Por hora" },
+  { value: "Dia", label: "Por dia" },
+  { value: "Serviço", label: "Por serviço/projeto" },
+];

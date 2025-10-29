@@ -4,44 +4,46 @@ import axios from "axios"
 
 const PublicRoute = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false)
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         const validateToken = async () => {
             const token = localStorage.getItem('token')
-            
             if (!token) {
-                setLoading(false);
+                setIsAuthenticated(false)
+                setLoading(false)
                 return
             }
-            
             try {
                 const response = await axios.get('/api/validate-token', {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
                 })
-                
                 if (response.status === 200) {
                     setIsAuthenticated(true)
                 } else {
                     localStorage.removeItem('token')
+                    setIsAuthenticated(false)
                 }
             } catch (error) {
-                console.error('Erro ao validar token:', error)
                 localStorage.removeItem('token')
+                setIsAuthenticated(false)
             }
             setLoading(false)
         }
-
         validateToken()
     }, [])
 
     if (loading) {
-        return <div>Carregando...</div>
+        return <></>
     }
 
-    return isAuthenticated ? <Navigate to="/" replace /> : children
+    if (isAuthenticated) {
+        return <Navigate to="/vagas" replace />
+    }
+
+    return children
 }
 
 export default PublicRoute
