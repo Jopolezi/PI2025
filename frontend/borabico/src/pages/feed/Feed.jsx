@@ -1,62 +1,11 @@
 import React, { useEffect } from "react"
 import * as S from "./styledFeed"
-import { MapPin, Calendar, DollarSign, Clock, AlertCircle, PhoneCall } from "lucide-react"
+import { CardFeed } from "@/components/feed/card/CardFeed"
 
 export default function Feed() {
     useEffect(() => {
         document.title = "Vagas"
     }, [])
-
-    const mockJobs = [
-        {
-            id: 1,
-            title: "Pintor Residencial",
-            category: "Construção e Reforma",
-            description: "Preciso de pintor experiente para pintura interna de casa. Trabalho inclui preparação de paredes, aplicação de massa corrida e pintura com tinta acrílica. Experiência mínima de 2 anos.",
-            value: "350,00",
-            payment: "Por dia",
-            address: "Rua das Flores, 123 - Centro, São Paulo - SP",
-            date: "15/10/2025",
-            phone: "(11) 98765-4321",
-            urgency: true
-        },
-        {
-            id: 2,
-            title: "Eletricista para Instalação",
-            category: "Serviços Elétricos",
-            description: "Necessário eletricista qualificado para instalação de pontos elétricos em apartamento novo. Serviço inclui instalação de tomadas, interruptores e luminárias. Trazer ferramentas próprias.",
-            value: "800,00",
-            payment: "Por projeto",
-            address: "Av. Paulista, 1000 - Bela Vista, São Paulo - SP",
-            date: "20/10/2025",
-            phone: "(11) 91234-5678",
-            urgency: false
-        },
-        {
-            id: 3,
-            title: "Jardineiro para Manutenção",
-            category: "Jardinagem e Paisagismo",
-            description: "Busco jardineiro para manutenção mensal de jardim residencial. Atividades incluem poda de plantas, limpeza de canteiros, adubação e controle de pragas. Trabalho fixo todos os meses.",
-            value: "200,00",
-            payment: "Por mês",
-            address: "Rua dos Jardins, 456 - Jardim Europa, São Paulo - SP",
-            date: "18/10/2025",
-            phone: "(11) 97654-3210",
-            urgency: false
-        },
-        {
-            id: 4,
-            title: "Jardineiro para Manutenção",
-            category: "Jardinagem e Paisagismo",
-            description: "Busco jardineiro para manutenção mensal de jardim residencial. Atividades incluem poda de plantas, limpeza de canteiros, adubação e controle de pragas. Trabalho fixo todos os meses.",
-            value: "200,00",
-            payment: "Por mês",
-            address: "Rua dos Jardins, 456 - Jardim Europa, São Paulo - SP",
-            date: "18/10/2025",
-            phone: "(11) 97654-3210",
-            urgency: false
-        }
-    ]
 
     return (
         <>
@@ -68,7 +17,8 @@ export default function Feed() {
                     <S.Divider/>
 
                     <S.JobsGrid>
-                        {mockJobs.map(job => (
+                        <CardFeed />
+                        {/* {mockJobs.map(job => (
                             <S.JobCard key={job.id} urgency={job.urgency}>
                                 {job.urgency && (
                                     <S.UrgencyBadge>
@@ -108,7 +58,7 @@ export default function Feed() {
 
                                 <S.ApplyButton>Ver detalhes</S.ApplyButton>
                             </S.JobCard>
-                        ))}
+                        ))} */}
                     </S.JobsGrid>
                 </S.Content>
             </S.Container>

@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import {
   MapPin,
   CheckCircle,
@@ -12,51 +11,11 @@ import {
   Trash2,
   User,
 } from "lucide-react";
-import { useParams } from "react-router-dom";
-import axios from "axios";
 import * as SC from "./styledPost";
+import usePost from "@/hooks/usePost";
 
 function Post() {
-  const { id } = useParams();
-  const [post, setPost] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [isOwner, setIsOwner] = useState(false);
-
-  useEffect(() => {
-    const fetchPost = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        if (!token) throw new Error("Token não encontrado. Faça login novamente.");
-
-        const response = await axios.get(`http://localhost:3000/api/post/${id}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        console.log("DADOS RECEBIDOS: ", response.data);
-
-        if (response.data.success) {
-          setPost(response.data.data);
-          setIsOwner(response.data.FromTheUser);
-        } else {
-          setError("Não foi possível carregar a vaga.");
-        }
-      } catch (err) {
-        console.error("Erro ao carregar vaga:", err);
-        setError("Não foi possível carregar a vaga.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPost();
-  }, [id]);
-
-  useEffect(() => {
-    if (post) {
-      document.title = isOwner ? "Sua publicação" : `Publicação`;
-    }
-  }, [post, isOwner]);
+  const { post, loading, error, isOwner, deletePost } = usePost();
 
   if (loading) return <p>Carregando...</p>;
   if (error) return <p>{error}</p>;
@@ -141,8 +100,7 @@ function Post() {
             <DollarSign size={14} /> Valor oferecido
           </SC.Data>
           <SC.Value>
-            R${" "}
-            {post.value ?? "Valor não informado, combine com o anunciante"}
+            R$ {post.value ?? "Valor não informado, combine com o anunciante"}
           </SC.Value>
         </SC.Group>
 
@@ -160,14 +118,16 @@ function Post() {
         {isOwner ? (
           <>
             <SC.Question>Esta é sua publicação!</SC.Question>
-            <SC.Answer>Modifique alguma informação ou exclua a publicação se quiser</SC.Answer>
+            <SC.Answer>
+              Modifique alguma informação ou exclua a publicação se quiser
+            </SC.Answer>
 
             <SC.OwnerActions>
               <SC.Edit to={`/editar-vaga/${post.id}`}>
                 <SquarePen size={16} /> Editar vaga
               </SC.Edit>
 
-              <SC.Delete to={`/deletar-vaga/${post.id}`}>
+              <SC.Delete onClick={deletePost}>
                 <Trash2 size={16} /> Deletar vaga
               </SC.Delete>
             </SC.OwnerActions>
@@ -175,7 +135,9 @@ function Post() {
         ) : (
           <>
             <SC.Question>Interessado na vaga?</SC.Question>
-            <SC.Answer>Entre em contato com o anunciante pelo botão abaixo!</SC.Answer>
+            <SC.Answer>
+              Entre em contato com o anunciante pelo botão abaixo!
+            </SC.Answer>
 
             <SC.Button>
               <CheckCircle size={16} /> Candidatar-se
