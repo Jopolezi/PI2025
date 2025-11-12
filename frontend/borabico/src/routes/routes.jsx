@@ -10,6 +10,7 @@ import Forgot from "../pages/auth/forgot/Forgot";
 import Publish from "../pages/publish/Publish";
 import Feed from "../pages/feed/Feed";
 import Post from "../pages/post/post";
+import Profile from "../pages/profile/Profile";
 
 
 const router = createBrowserRouter([
@@ -48,6 +49,14 @@ const router = createBrowserRouter([
             <Post />
           </ProtectedRoute>
         ),
+      },
+      {
+        path: "perfil/:id",
+        element: (
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        )
       }
     ],
   },

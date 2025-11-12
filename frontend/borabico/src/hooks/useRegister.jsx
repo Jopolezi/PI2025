@@ -48,7 +48,7 @@ function useRegister() {
       toastSuccess("Registro feito com sucesso!");
 
       setTimeout(() => {
-        navigate("/perfil");
+        navigate("/vagas");
       }, 2500);
     } catch (error) {
       if (error.response) {

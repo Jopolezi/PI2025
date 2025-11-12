@@ -13,7 +13,7 @@ import {
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 
 function Header() {
-  const { isLogged, handleLogout } = useHeader();
+  const { isLogged, handleLogout, profile } = useHeader();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -44,18 +44,24 @@ function Header() {
             onOpenChange={setIsOpen}
             modal={false}
           >
-            <S.Trigger>
-              <S.Photo>
-                <User size={18} />
-              </S.Photo>
-              <S.Flex>
-                Eu
-                {isOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
-              </S.Flex>
-            </S.Trigger>
+            <DropdownMenu.Trigger asChild>
+              <S.Trigger>
+                <S.Photo>
+                  {profile?.avatar ? (
+                    <img src={profile.avatar} alt={profile.name} />
+                  ) : (
+                    <User size={18} />
+                  )}
+                </S.Photo>
+                <S.Flex>
+                  Eu
+                  {isOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                </S.Flex>
+              </S.Trigger>
+            </DropdownMenu.Trigger>
             <S.Content>
               <DropdownMenu.Item asChild>
-                <S.Item to="/perfil">
+                <S.Item to={`/perfil/${profile?.id}`}>
                   <User size={16} />
                   Perfil
                 </S.Item>

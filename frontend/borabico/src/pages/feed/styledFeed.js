@@ -23,7 +23,7 @@ export const Content = styled.div`
   width: 100%;
   min-height: 100dvh;
   height: 100%;
-  padding: 2% 4%;
+  padding: 10px 4%;
   background: ${C.colors.offwhite};
 `
 

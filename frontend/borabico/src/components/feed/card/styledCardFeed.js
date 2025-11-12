@@ -1,52 +1,163 @@
 // styledCardFeed.js
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import * as C from "@/styles/colors";
+import * as SC from "@/styles/styledComponents";
 import { Link } from "react-router-dom";
 
+export const Group = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  gap: 5px;
+`;
+
+export const Flex = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const Data = styled.label`
+  color: ${C.colors.gray};
+  font-size: 14px;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  text-align: left;
+`;
+
 export const Card = styled.div`
-display: flex;
-flex-direction: column;
-height: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   background: #fff;
+  border: 1px solid rgba(58, 69, 83, 0.3);
   border-radius: 12px;
-  padding: 24px;
+  padding: 16px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s, box-shadow 0.2s;
   position: relative;
   font-family: "Poppins", sans-serif;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-  }
 `;
 
 export const Urgency = styled.div`
-  position: absolute;
-  top: 12px;
-  right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin: 0;
+  margin-bottom: 5px;
+  padding: 5px 10px;
+  background: #fee2e2;
   color: ${C.colors.red};
+  border: none;
+  border-radius: 20px;
+  pointer-events: none;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
 `;
 
 export const Header = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+`;
+
+export const User = styled(Flex)`
+  gap: 5px;
+`;
+
+export const Profile = styled(Link)`
+  text-decoration: none;
+`;
+
+export const Photo = styled.div`
+  ${SC.flexCenter};
+  width: 40px;
+  height: 40px;
+  color: ${C.colors.gray};
+  border: 2px solid ${C.colors.gray};
+  border-radius: 12px;
+  object-fit: cover;
+
+  @media (max-width: 768px) {
+    width: 35px;
+    height: 35px;
+  }
+`;
+
+export const Icon = styled.div`
+  ${SC.flexCenter};
+  width: 40px;
+  height: 40px;
+  color: ${C.colors.gray};
+  border: 2px solid ${C.colors.gray};
+  border-radius: 12px;
+  object-fit: cover;
+
+  @media (max-width: 768px) {
+    width: 35px;
+    height: 35px;
+  }
+`;
+
+export const Username = styled.p`
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  color: ${C.colors.gray};
+  transition: all 0.5s ease;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+export const Divider = styled.hr`
+  display: block;
+  align-items: center;
+  justify-content: center;
+  width: calc(100% + 32px);
+  padding: 0;
+  margin: 10px -16px;
+  height: 0.5px;
+  border: none;
+  background: rgba(58, 69, 83, 0.3);
+`;
+
+export const Textbox = styled.div`
+  display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-bottom: 16px;
+  gap: 6px;
+  min-height: 200px;
+`;
+
+export const TitleWrapper = styled.div`
+  width: 100%;
+  flex-wrap: wrap;
 `;
 
 export const Title = styled.h2`
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 0;
   font-size: 20px;
   font-weight: 600;
-  color: #1a1a1a;
-  margin: 0;
+  color: ${C.colors.dark};
+  min-height: calc(20px * 1.2 * 1);
 `;
 
 export const Category = styled.span`
   display: inline-block;
   align-self: flex-start;
   background: #fee2e2;
-  color: #dc2626;
+  color: ${C.colors.red};
   padding: 6px 12px;
   border-radius: 20px;
   font-size: 12px;
@@ -55,14 +166,14 @@ export const Category = styled.span`
 
 export const Description = styled.p`
   max-height: 72px;
-  color: #6b7280;
-  font-size: 14px;
-  line-height: 1.6;
-  margin-bottom: 20px;
+  color: #374151;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  white-space: pre-wrap;
+  line-height: 1.4;
+  min-height: calc(14px * 1.4 * 3);
 `;
 
 export const Info = styled.div`
@@ -128,9 +239,9 @@ export const CityState = styled.span`
 `;
 
 export const View = styled(Link)`
-  display: block;
+  ${SC.flexCenter};
+  gap: 5px;
   width: 100%;
-  text-align: center;
   background: ${C.colors.red};
   color: ${C.colors.white};
   border: none;
@@ -146,4 +257,61 @@ export const View = styled(Link)`
   &:hover {
     background: ${C.colors.darkred};
   }
+`;
+
+export const NotFound = styled.div`
+  ${SC.flexCenter};
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  grid-column: 1 / -1;
+`;
+
+export const NFImage = styled.img`
+  width: 500px;
+  height: 500px;
+  object-cit: cover;
+`;
+
+export const NFText = styled.p`
+  font-family: "Poppins", sans-serif;
+  font-size: 2em;
+  font-weight: 500;
+  color: #1a1a1a;
+  margin: 0;
+`;
+
+export const Days = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin: 0;
+  margin-bottom: 5px;
+  padding: 5px 10px;
+  color: ${C.colors.white};
+  border: none;
+  border-radius: 20px;
+  pointer-events: none;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  transition: background 0.3s ease;
+
+  ${({ upcoming, tomorrow, today }) => css`
+    ${upcoming &&
+    `
+      background: linear-gradient(135deg, #4caf50, #2e7d32);
+    `}
+
+    ${tomorrow &&
+    `
+      background: linear-gradient(135deg, #ffb300, #f57c00); 
+    `}
+
+    ${today &&
+    `
+      background: linear-gradient(135deg, #E63946, #B71C1C);
+    `}
+  `}
 `;

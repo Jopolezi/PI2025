@@ -38,6 +38,7 @@
     "rsuite": "^5.82.0",
     "scrollreveal": "^4.0.9",
     "styled-components": "^6.1.16",
+    "sweetalert2": "^11.26.3",
     "swiper": "^11.2.7"
   },
   "devDependencies": {
