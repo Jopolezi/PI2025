@@ -1,5 +1,6 @@
 [build]
-  publish = "dist"
+  base = "frontend/borabico"
+  publish = "frontend/borabico/dist"
   command = "npm run build"
 
 [[redirects]]
