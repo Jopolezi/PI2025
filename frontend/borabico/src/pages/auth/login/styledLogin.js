@@ -1,27 +1,17 @@
-import styled, { css } from 'styled-components'
-import { Link } from 'react-router-dom'
-import * as C from '../../../styles/colors'
-import * as S from '../../../styles/styledComponents'
-import Button from '../../../components/common/Buttons/button'
-
-
-export const OpenEye = css`
-    width: 30px;
-    height: 30px;
-    color: ${C.colors.gray};
-    position: absolute;
-    right: 0;
-    padding: 12px;
-    cursor: pointer;
-`
+import styled, { css } from "styled-components";
+import { Link } from "react-router-dom";
+import * as C from "../../../styles/colors";
+import * as S from "../../../styles/styledComponents";
+import Button from "../../../components/common/Buttons/button";
 
 export const LoginButton = styled(Button)`
-background: ${props => props.disabled ? C.colors.gray : C.colors.red} !important;
+  background: ${(props) =>
+    props.disabled ? C.colors.gray : C.colors.red} !important;
 
-&:hover {
- background: ${props => props.disabled ? C.colors.gray : C.colors.darkRed} !important;
-}
-
+  &:hover {
+    background: ${(props) =>
+      props.disabled ? C.colors.gray : C.colors.darkRed} !important;
+  }
 `;
 
 export const Container = styled.div`
@@ -31,56 +21,30 @@ export const Container = styled.div`
   max-height: 100dvh;
   width: 100%;
   background: ${C.colors.offwhite};
-  overflow: hidden; 
+  overflow: hidden;
 `;
 
-export const Header = styled.header`
+export const ShapeTop = styled.div`
+  position: absolute;
   width: 100%;
-  max-width: 100%;
-  padding: 0 4%;
-  background: ${C.colors.offwhite};
-  flex-shrink: 0; 
-  
-  @media (max-width: 480px) {
-    padding: 4px 4%;
-  }
+  height: 280px;
+  top: 0;
+  right: 0;
+  background: ${C.colors.red};
+  z-index: 0;
+  clip-path: path("M0 130Q200 280 400 200T800 500L800 300 0 300Z");
+  transform: rotate(180deg);
 `;
 
-export const ContainerLogo = styled(Link)`
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  color: ${C.colors.dark};
-  text-decoration: none;
-`;
-
-export const Logo = styled.img`
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-  
-  @media (max-width: 480px) {
-    width: 56px;
-    height: 56px;
-  }
-`;
-
-export const LogoText = styled.h2`
-  ${S.font};
-  font-weight: 800;
-  font-size: 1.1rem;
-  color: ${C.colors.dark};
-  margin: 0;
-  pointer-events: none;
-  user-select: none;
-  
-  @media (max-width: 480px) {
-    font-size: 2rem;
-  }
-`;
-
-export const Span = styled.span`
-  color: ${C.colors.red};
+export const ShapeBottom = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 280px;
+  bottom: 0;
+  left: 0;
+  background: ${C.colors.red};
+  z-index: 0;
+  clip-path: path("M0 130Q200 280 400 200T800 500L800 300 0 300Z");
 `;
 
 export const Content = styled.div`
@@ -89,24 +53,21 @@ export const Content = styled.div`
   width: 100%;
   max-width: 100%;
   padding: 0 4%;
-  flex: 1; 
-  min-height: 0;   
+  flex: 1;
+  min-height: 0;
   justify-content: center;
+  z-index: 1;
 `;
 
-export const Title = styled.h1`    
+export const Slogan = styled.h1`
   ${S.font};
   font-weight: 600;
-  font-size: 1.8rem;
-  color: ${C.colors.darkGray};
-  margin: 0 0 0.5rem 0;
-  
-  @media (max-width: 768px) {
-    font-size: 1.6rem;
-  }
-  
-  @media (max-width: 480px) {
-    font-size: 2rem;
+  font-size: 1.5rem;
+  color: ${C.colors.dark};
+  margin: 0 0 1rem 0;
+
+  span {
+    color: ${C.colors.red};
   }
 `;
 
@@ -119,17 +80,42 @@ export const Form = styled.form`
   padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  gap: 0.5rem; 
+  gap: 0.5rem;
+`;
+
+export const Return = styled(Link)`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: ${C.colors.dark};
+  text-decoration: none;
+  transition: all 0.3s;
+
+  &:hover {
+    color: ${C.colors.red};
+  }
+`;
+
+export const Title = styled.h2`
+  ${S.font};
+  font-weight: 600;
+  font-size: 1.8rem;
+  color: ${C.colors.darkGray};
+  margin: 0 0 0.5rem 0;
 
   @media (max-width: 768px) {
-    padding: 0.875rem;
-    max-width: 90%;
+    font-size: 1.6rem;
   }
-  
+
   @media (max-width: 480px) {
-    padding: 0.75rem;
-    gap: 0.375rem;
+    font-size: 2rem;
   }
+`;
+
+export const InputContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 `;
 
 export const InputTitle = styled.label`
@@ -137,11 +123,30 @@ export const InputTitle = styled.label`
   font-weight: 500;
   font-size: 0.85rem;
   color: ${C.colors.dark};
-  margin-bottom: 0.125rem;
-  
+  margin-bottom: 0.2rem;
+  margin-left: 10px;
+
   @media (max-width: 480px) {
     font-size: 1rem;
   }
+`;
+
+export const Flex = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+`;
+
+export const Visibility = styled.button`
+  position: absolute;
+  display: flex;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: ${C.colors.gray};
 `;
 
 export const InputError = styled.p`
@@ -150,7 +155,7 @@ export const InputError = styled.p`
   font-size: 0.75rem;
   color: ${C.colors.red};
   margin: 0.1rem 0 0 0;
-  
+
   @media (max-width: 480px) {
     font-size: 0.7rem;
   }
@@ -159,69 +164,38 @@ export const InputError = styled.p`
 export const MoreOptionsContainer = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
   margin-top: 0.25rem;
+  width: 100%;
 
   @media (max-width: 480px) {
     flex-direction: column;
-    align-items: flex-start;
     gap: 6px;
   }
 `;
 
-export const RememberContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-`;
-
-export const RememberCheckbox = styled.input`
-  ${S.flexCenter};
-  width: 18px;
-  height: 18px;
-  accent-color: ${C.colors.red};
-
-  @media (max-width: 480px) {
-    width: 20px;
-    height: 20px;
-  }
-`;
-
-export const RememberCheckboxText = styled.p`
-  color: ${C.colors.gray};
-  ${S.font};
-  font-size: 0.85rem;
-  font-weight: 500;
-  text-decoration: none;
-  margin: 0;
-  
-  @media (max-width: 480px) {
-    font-size: 0.8rem;
-  }
-`;
-
 export const ForgotPassword = styled(Link)`
+  display: flex;
+  margin-left: auto;
   ${S.font};
   font-weight: 500;
   font-size: 0.85rem;
   color: ${C.colors.red};
   text-decoration: underline;
-  
+
   @media (max-width: 480px) {
     font-size: 0.8rem;
   }
 `;
 
 export const AndContainer = styled.div`
-  display: flex; 
-  align-items: center; 
-  text-align: center; 
-  margin: 0.5rem 0; 
-  color: ${C.colors.gray}; 
-  font-size: 0.75rem; 
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 0.5rem 0;
+  color: ${C.colors.gray};
+  font-size: 0.75rem;
   gap: 8px;
-  
+
   @media (max-width: 480px) {
     margin: 0.375rem 0;
     font-size: 0.7rem;
@@ -235,7 +209,7 @@ export const Line = styled.div`
 `;
 
 export const AndText = styled.span`
-  white-space: nowrap; 
+  white-space: nowrap;
 `;
 
 export const RegisterContainer = styled.div`
@@ -252,7 +226,7 @@ export const RegisterTitle = styled.p`
   color: ${C.colors.dark};
   margin: 0;
   text-align: center;
-  
+
   @media (max-width: 480px) {
     font-size: 0.75rem;
   }
@@ -275,8 +249,8 @@ export const Footer = styled.footer`
   align-items: center;
   background: ${C.colors.offwhite};
   color: ${C.colors.gray};
-  flex-shrink: 0; 
-  
+  flex-shrink: 0;
+
   @media (max-width: 768px) {
     flex-direction: column;
     gap: 4px;
@@ -284,7 +258,7 @@ export const Footer = styled.footer`
     padding: 6px 4%;
     min-height: 35px;
   }
-  
+
   @media (max-width: 480px) {
     padding: 4px 4%;
     min-height: 30px;
@@ -294,11 +268,11 @@ export const Footer = styled.footer`
 export const FooterText = styled.p`
   ${S.font};
   font-weight: 400;
-  font-size: 0.65rem; 
+  font-size: 0.65rem;
   pointer-events: none;
   user-select: none;
   margin: 0;
-  
+
   @media (max-width: 480px) {
     font-size: 0.6rem;
   }

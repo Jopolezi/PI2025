@@ -4,7 +4,7 @@ import { toastError } from "@/components/common/Toasters/Toaster";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useForm } from "react-hook-form";
-import { category} from "@/data/category";
+import { category } from "@/data/category";
 
 function usePost() {
   const navigate = useNavigate();
@@ -48,10 +48,13 @@ function usePost() {
             city: response.data.data.city,
             state: response.data.data.state,
             number: response.data.data.number,
-            date: response.data.data.date,
+            date: response.data.data.date
+              ? response.data.data.date.split("T")[0]
+              : "", 
             urgent: response.data.data.urgent,
             category: response.data.data.category,
           });
+
         } else setError("Não foi possível carregar a vaga.");
       } catch (err) {
         setError("Não foi possível carregar a vaga.");
@@ -217,7 +220,9 @@ function usePost() {
     };
 
     const text = `Olá, tenho interesse na vaga que você publicou no site borabico. Ainda está disponível? \n
-    Vaga para bico de ${getCategoryLabel(post.category)} para a data ${cleanDate}`;
+    Vaga para bico de ${getCategoryLabel(
+      post.category
+    )} para a data ${cleanDate}`;
 
     return `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
   };

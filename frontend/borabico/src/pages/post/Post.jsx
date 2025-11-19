@@ -261,8 +261,7 @@ function Post() {
                   <SC.Input
                     type="date"
                     min={new Date().toISOString().split("T")[0]}
-                    value={field.value || post.date}
-                    onChange={(e) => field.onChange(e.target.value)}
+                    {...field} 
                   />
                 )}
               />

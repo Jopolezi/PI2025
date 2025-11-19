@@ -16,6 +16,7 @@ import { category } from "@/data/category";
 import { payment } from "@/data/payment";
 import Select from "react-select";
 import { NumericFormat, PatternFormat } from "react-number-format";
+import axios from "axios";
 import { PulseLoader } from "react-spinners";
 
 export default function Publish() {

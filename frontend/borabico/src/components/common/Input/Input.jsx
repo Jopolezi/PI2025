@@ -8,7 +8,7 @@ const InputComponent = styled.input`
   padding: 0.85rem;
   border: 2px solid ${C.colors.input};
   color: ${C.colors.dark};
-  border-radius: 8px;
+  border-radius: 20px;
   cursor: text;
   ${S.font};
   font-size: 1rem;
@@ -27,6 +27,7 @@ const InputComponent = styled.input`
   &:focus {
     outline: none;
     border-color: ${C.colors.red};
+    filter: drop-shadow(0px 0px 5px #E6394633);
   }
 `
 
@@ -36,7 +37,8 @@ const Input = ({ type, placeholder, onChange, ...rest }) => {
     type={type}
     placeholder={placeholder}
     onChange={onChange}
-    {...rest} />
+    {...rest} 
+    />
   )
 }
 

@@ -1,21 +1,23 @@
-import styled from "styled-components"
-import * as S from "@/styles/styledComponents"
-import * as C from "@/styles/colors"
-import "@fontsource/poppins"
+import styled from "styled-components";
+import * as S from "@/styles/styledComponents";
+import * as C from "@/styles/colors";
+import "@fontsource/poppins";
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 
 export const Container = styled.div`
   width: 100%;
   flex: 1;
   background: ${C.colors.white};
   color: ${C.colors.white};
-`
+`;
 
 export const Flex = styled.div`
   position: relative;
   display: flex;
+  align-items: center;
   width: 100%;
   gap: 10px;
-`
+`;
 
 export const Content = styled.div`
   display: flex;
@@ -25,10 +27,17 @@ export const Content = styled.div`
   height: 100%;
   padding: 10px 4%;
   background: ${C.colors.offwhite};
-`
+`;
+
+export const Textbox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 50%;
+`;
 
 export const Title = styled.h1`
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 600;
   font-family: "Poppins", sans-serif;
   color: ${C.colors.dark};
@@ -39,6 +48,225 @@ export const Subtitle = styled.p`
   font-weight: 500;
   font-family: "Poppins", sans-serif;
   color: ${C.colors.gray};
+  margin-bottom: 30px;
+`;
+
+export const Search = styled.div`
+  ${S.flexCenter};
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  width: 50%;
+`;
+
+export const Group = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 500px;
+`;
+
+export const Input = styled.input`
+  width: 100%;
+  outline: none;
+  padding: 12px;
+  margin: 0 auto;
+  border: 2px solid ${C.colors.input};
+  border-radius: 20px;
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  transition: all 0.5s;
+  box-sizing: border-box;
+  color: ${C.colors.dark};
+
+  &:focus,
+  &:hover {
+    border: 2px solid ${C.colors.red};
+  }
+
+  &[type="date"],
+  &[type="time"] {
+    &::-webkit-calendar-picker-indicator {
+      display: none;
+    }
+  }
+`;
+
+export const SearchInput = styled(Input)`
+  padding-right: 60px;
+`;
+
+export const SearchIcon = styled.div`
+  position: absolute;
+  ${S.flexCenter};
+  right: 0;
+  top: 0;
+  bottom: 0;
+  color: ${C.colors.gray};
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  &:hover {
+    color: ${C.colors.red};
+  }
+`;
+
+export const Filters = styled.div`
+  color: ${C.colors.gray};
+  cursor: pointer;
+`;
+
+export const FiltersContent = styled(DropdownMenu.Content)`
+  width: 300px;
+  padding: 10px;
+  margin: 10px;
+  background: ${C.colors.white};
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 99;
+`;
+
+export const FilterSection = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid ${C.colors.input};
+  }
+`;
+
+export const FilterButton = styled.button`
+  ${S.flexCenter};
+  padding: 10px;
+  background: none;
+  border: none;
+  color: ${C.colors.gray};
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.3s;
+
+  &:hover {
+    color: ${C.colors.red};
+    background: ${C.colors.offwhite};
+  }
+`;
+
+export const FilterTitle = styled.h2`
+  font-size: 14px;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  color: ${C.colors.gray};
+  background: ${C.colors.white};
+`;
+
+export const FilterLabel = styled.label`
+  font-size: 14px;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  color: ${C.colors.gray};
+  background: ${C.colors.white};
+`;
+
+export const SelectWrapper = styled.div`
+  .react-select__control {
+    width: 100%;
+    padding: 0px;
+    margin-bottom: 10px;
+    border: 2px solid ${C.colors.input};
+    border-radius: 8px;
+    box-shadow: none;
+    transition: all 0.5s;
+    box-sizing: border-box;
+
+    &:hover,
+    &.react-select__control--is-focused {
+      border: 2px solid ${C.colors.red};
+    }
+  }
+
+  .react-select__value-container {
+    padding: 12px;
+  }
+
+  .react-select__input-container {
+    margin: 0;
+    padding: 0;
+  }
+
+  .react-select__indicator-separator {
+    display: none;
+  }
+
+  .react-select__dropdown-indicator {
+    color: ${C.colors.gray};
+
+    &:hover {
+      color: ${C.colors.red};
+    }
+  }
+
+  .react-select__placeholder {
+    color: ${C.colors.gray};
+  }
+
+  .react-select__single-value {
+    color: ${C.colors.dark};
+  }
+
+  .react-select__menu {
+    border: 1px solid ${C.colors.input};
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .react-select__option {
+    color: ${C.colors.dark};
+    transition: all 0.25s;
+
+    &:hover {
+      background-color: ${C.colors.red};
+      color: ${C.colors.white};
+    }
+
+    &.react-select__option--is-selected {
+      background-color: ${C.colors.red};
+      color: ${C.colors.white};
+    }
+  }
+
+  [data-highlighted],
+  [data-state="open"] {
+    background: transparent !important;
+    outline: none !important;
+    border: none !important;
+  }
+
+  &:focus,
+  &:hover {
+    outline: none !important;
+    border: none !important;
+  }
+`;
+
+export const Confirm = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  max-width: fit-content;
+  margin-left: auto;
+  padding: 5px;
+  background: ${C.colors.red};
+  color: ${C.colors.white};
+  font-size: 14px;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  border: none;
+  border-radius: 20px;
+  padding: 8px;
+  cursor: pointer;
 `;
 
 export const Divider = styled.hr`
@@ -57,4 +285,4 @@ export const JobsGrid = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   gap: 24px;
   margin-top: 32px;
-`
+`;

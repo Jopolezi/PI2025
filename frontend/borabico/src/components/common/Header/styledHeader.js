@@ -165,6 +165,7 @@ export const Photo = styled.div`
 export const Content = styled(DropdownMenu.Content)`
   width: 150px;
   padding: 10px;
+  margin: 5px;
   background: ${C.colors.white};
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);

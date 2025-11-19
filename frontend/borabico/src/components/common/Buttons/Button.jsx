@@ -6,12 +6,11 @@ const ButtonComponent = styled.button`
 width: 100%;
 background: ${({ loading }) => loading ? C.colors.gray : C.colors.red};
 color: ${C.colors.white};
-${S.font};
 font-size: 1rem;
-text-transform: uppercase;
+font-family: "Poppins", sans-serif;
 padding: 0.85rem;
 border: none;
-border-radius: 4px;
+border-radius: 20px;
 margin-top: 1rem;
 cursor: ${({ loading }) => loading ? 'not-allowed' : 'pointer'};
 transition: background 0.2s;

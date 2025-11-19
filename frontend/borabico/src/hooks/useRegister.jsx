@@ -10,6 +10,7 @@ function useRegister() {
     register,
     handleSubmit,
     control,
+    watch,
     formState: { errors },
   } = useForm({
     mode: "onChange",
@@ -82,6 +83,7 @@ function useRegister() {
     onSubmit,
     control,
     loading,
+    watch
   };
 }
 
