@@ -87,7 +87,7 @@ export const Input = styled.input`
   padding: 12px;
   margin: 0;
   border: 2px solid ${C.colors.input};
-  border-radius: 8px;
+  border-radius: 20px;
   font-family: "Poppins", sans-serif;
   font-size: 16px;
   transition: all 0.5s;
@@ -114,7 +114,7 @@ export const Textarea = styled.textarea`
   padding: 12px;
   margin: 0;
   border: 2px solid ${C.colors.input};
-  border-radius: 8px;
+  border-radius: 20px;
   font-family: "Poppins", sans-serif;
   font-size: 16px;
   transition: all 0.5s;
@@ -168,7 +168,7 @@ export const SelectWrapper = styled.div`
     padding: 0px;
     margin: 0;
     border: 2px solid ${C.colors.input};
-    border-radius: 8px;
+    border-radius: 20px;
     box-shadow: none;
     transition: all 0.5s;
     box-sizing: border-box;

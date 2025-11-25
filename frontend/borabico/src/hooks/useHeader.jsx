@@ -19,22 +19,27 @@ export const useHeader = () => {
   useEffect(() => {
     const handleProfile = async () => {
       const token = localStorage.getItem("token");
-      const userId = localStorage.getItem("userId"); 
-            
+      const userId = localStorage.getItem("userId");
+
+      if (!token || !userId) {
+        console.log("Token ou userId ausente");
+        return;
+      }
+
       try {
         setLoading(true);
         const response = await axios.get(
-          `http://localhost:3000/api/users/${userId}`, 
+          `http://localhost:3000/api/auth/perfil/${userId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-  
+
         setProfile(response.data.data);
       } catch (err) {
         console.log("Erro ao carregar dados", err);
         if (err.response?.status === 401) {
-          handleLogout(); 
+          handleLogout();
         }
       } finally {
         setLoading(false);

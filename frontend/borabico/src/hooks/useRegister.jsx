@@ -76,6 +76,17 @@ function useRegister() {
     }
   };
 
+  const verifyPassword = () => {
+    const password = watch("password") || "";
+  
+    return {
+      length: password.length >= 6,
+      uppercase: /[A-Z]/.test(password),
+      number: /[0-9]/.test(password),
+      char: /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password),
+    };
+  };
+
   return {
     register,
     handleSubmit,
@@ -83,7 +94,8 @@ function useRegister() {
     onSubmit,
     control,
     loading,
-    watch
+    watch,
+    verifyPassword
   };
 }
 

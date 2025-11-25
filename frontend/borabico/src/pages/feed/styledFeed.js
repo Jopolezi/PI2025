@@ -17,6 +17,12 @@ export const Flex = styled.div`
   align-items: center;
   width: 100%;
   gap: 10px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
 `;
 
 export const Content = styled.div`
@@ -27,6 +33,10 @@ export const Content = styled.div`
   height: 100%;
   padding: 10px 4%;
   background: ${C.colors.offwhite};
+
+  @media (max-width: 768px) {
+    padding: 10px 4%; 
+  }
 `;
 
 export const Textbox = styled.div`
@@ -34,6 +44,10 @@ export const Textbox = styled.div`
   flex-direction: column;
   gap: 5px;
   width: 50%;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 export const Title = styled.h1`
@@ -41,6 +55,10 @@ export const Title = styled.h1`
   font-weight: 600;
   font-family: "Poppins", sans-serif;
   color: ${C.colors.dark};
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
 `;
 
 export const Subtitle = styled.p`
@@ -49,6 +67,11 @@ export const Subtitle = styled.p`
   font-family: "Poppins", sans-serif;
   color: ${C.colors.gray};
   margin-bottom: 30px;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+  }
 `;
 
 export const Search = styled.div`
@@ -57,6 +80,11 @@ export const Search = styled.div`
   justify-content: flex-end;
   gap: 10px;
   width: 50%;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    justify-content: space-between; 
+  }
 `;
 
 export const Group = styled.div`
@@ -65,6 +93,11 @@ export const Group = styled.div`
   align-items: center;
   width: 100%;
   max-width: 500px;
+
+  @media (max-width: 768px) {
+    width: calc(100% - 60px);
+    max-width: none;
+  }
 `;
 
 export const Input = styled.input`
@@ -114,19 +147,11 @@ export const SearchIcon = styled.div`
 `;
 
 export const Filters = styled.div`
+  position: relative;
   color: ${C.colors.gray};
   cursor: pointer;
 `;
 
-export const FiltersContent = styled(DropdownMenu.Content)`
-  width: 300px;
-  padding: 10px;
-  margin: 10px;
-  background: ${C.colors.white};
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  z-index: 99;
-`;
 
 export const FilterSection = styled.div`
   display: flex;
@@ -153,12 +178,31 @@ export const FilterButton = styled.button`
   }
 `;
 
+export const FilterMenu = styled.div`
+  position: absolute;
+  right: 0;
+  top: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin-top: 8px;
+  padding: 16px;
+  background: ${C.colors.white};
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+
+  @media (max-width: 480px) {
+    width: 250px;
+  }
+`;
+
 export const FilterTitle = styled.h2`
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   font-family: "Poppins", sans-serif;
-  color: ${C.colors.gray};
-  background: ${C.colors.white};
+  color: ${C.colors.dark};
+  margin-bottom: 12px;
 `;
 
 export const FilterLabel = styled.label`
@@ -172,8 +216,8 @@ export const FilterLabel = styled.label`
 export const SelectWrapper = styled.div`
   .react-select__control {
     width: 100%;
+    margin-bottom: 20px;
     padding: 0px;
-    margin-bottom: 10px;
     border: 2px solid ${C.colors.input};
     border-radius: 8px;
     box-shadow: none;
@@ -251,21 +295,15 @@ export const SelectWrapper = styled.div`
 `;
 
 export const Confirm = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
   width: 100%;
-  max-width: fit-content;
-  margin-left: auto;
-  padding: 5px;
+  padding: 10px 16px;
   background: ${C.colors.red};
   color: ${C.colors.white};
   font-size: 14px;
   font-weight: 500;
   font-family: "Poppins", sans-serif;
   border: none;
-  border-radius: 20px;
-  padding: 8px;
+  border-radius: 8px;
   cursor: pointer;
 `;
 
@@ -285,4 +323,15 @@ export const JobsGrid = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   gap: 24px;
   margin-top: 32px;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 24px;
+  }
 `;

@@ -1,29 +1,45 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import useRegister from "../../../hooks/useRegister.jsx";
 import * as S from "./styledRegister";
 import Input from "../../../components/common/Input/Input";
 import Button from "../../../components/common/Buttons/button";
 import { Controller } from "react-hook-form";
-import { Link } from "react-router-dom";
 import { PatternFormat } from "react-number-format";
 import { PulseLoader } from "react-spinners";
 import { gender } from "../../../data/gender.js";
 import Select from "react-select";
-import ProgressBar from "@ramonak/react-progress-bar";
-import { Progress } from "antd";
+import { IoMdCheckmarkCircleOutline } from "react-icons/io";
+import { Eye, EyeClosed, ArrowLeft } from "lucide-react";
 
 function Register() {
   useEffect(() => {
     document.title = "Cadastrar";
   }, []);
 
-  const { register, handleSubmit, errors, control, onSubmit, loading, watch } =
-    useRegister();
+  const [visibility, setVisibility] = useState(false);
 
-  2;
+  const showPassword = () => {
+    setVisibility(!visibility);
+  };
+
+  const {
+    register,
+    handleSubmit,
+    errors,
+    control,
+    onSubmit,
+    loading,
+    watch,
+    verifyPassword,
+  } = useRegister();
+
+  const { length, uppercase, number, char } = verifyPassword();
+
   return (
     <>
       <S.Container>
+        <S.ShapeTop />
+        <S.ShapeBottom />
         <S.Content>
           <S.Form onSubmit={handleSubmit(onSubmit)}>
             <S.Title>Cadastrar</S.Title>
@@ -178,18 +194,29 @@ function Register() {
 
               <S.InputContent>
                 <S.InputTitle>Senha</S.InputTitle>
-                <Input
-                  {...register("password", {
-                    required: "Este campo é obrigatório",
-                    minLength: {
-                      value: 6,
-                      message: "Senha deve ter pelo menos 6 caracteres.",
-                    },
-                  })}
-                  type="password"
-                  placeholder="Senha"
-                  name="password"
-                />
+
+                <S.Flex>
+                  <Input
+                    {...register("password", {
+                      required: "Este campo é obrigatório",
+                      minLength: {
+                        value: 6,
+                        message: "A senha deve ter no mínimo 6 caracteres",
+                      },
+                      pattern: {
+                        value:
+                          /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{6,}$/,
+                      },
+                    })}
+                    type={visibility ? "text" : "password"}
+                    placeholder="Senha"
+                    name="password"
+                  />
+
+                  <S.Visibility type="button" onClick={showPassword}>
+                    {visibility ? <EyeClosed /> : <Eye />}
+                  </S.Visibility>
+                </S.Flex>
                 {errors.password && (
                   <S.InputError>{errors.password.message}</S.InputError>
                 )}
@@ -208,7 +235,7 @@ function Register() {
                       return true;
                     },
                   })}
-                  type="password"
+                  type={visibility ? "text" : "password"}
                   placeholder="Confirme sua senha"
                   name="confirmPassword"
                 />
@@ -217,6 +244,29 @@ function Register() {
                 )}
               </S.InputContent>
 
+              {watch("password") && (
+                <S.PasswordVerify>
+                  <S.PasswordVerifyTitle>
+                    Requisitos de senha
+                  </S.PasswordVerifyTitle>
+                  <S.PasswordRule isValid={length}>
+                    <IoMdCheckmarkCircleOutline size={16} />
+                    Pelo menos 6 caracteres
+                  </S.PasswordRule>
+                  <S.PasswordRule isValid={uppercase}>
+                    <IoMdCheckmarkCircleOutline size={16} />
+                    Pelo menos uma letra maiúscula
+                  </S.PasswordRule>
+                  <S.PasswordRule isValid={number}>
+                    <IoMdCheckmarkCircleOutline size={16} />
+                    Pelo menos um número
+                  </S.PasswordRule>
+                  <S.PasswordRule isValid={char}>
+                    <IoMdCheckmarkCircleOutline size={16} />
+                    Pelo menos um caractere especial (!@#$ etc.)
+                  </S.PasswordRule>
+                </S.PasswordVerify>
+              )}
             </S.InputContainer>
 
             <Button
@@ -227,15 +277,16 @@ function Register() {
               {loading ? (
                 <PulseLoader color="#fff" loading={true} size={10} />
               ) : (
-                "Cadastrar"
+                "Cadastrar-se"
               )}
             </Button>
 
-            <S.AndContainer>
-              <S.Line />
-              <S.AndText>ou</S.AndText>
-              <S.Line />
-            </S.AndContainer>
+            <S.TermsAndConditions>
+              Ao clicar em "Cadastrar-se" você concorda com os{" "}
+              <S.TCLink to="/termos-e-condicoes">Termos e Condições</S.TCLink>{" "}
+              do Borabico, além das políticas de{" "}
+              <S.TCLink to="/">Privacidade</S.TCLink>.
+            </S.TermsAndConditions>
 
             <S.LoginContainer>
               <S.LoginTitle>
@@ -246,16 +297,6 @@ function Register() {
           </S.Form>
         </S.Content>
       </S.Container>
-
-      <S.Footer>
-        <S.FooterText>
-          &#169; 2025 BORABICO. Todos os direitos reservados.
-        </S.FooterText>
-        <S.FooterLinks>
-          <Link to="/">Política de Privacidade</Link>
-          <Link to="/">Termos de Serviço</Link>
-        </S.FooterLinks>
-      </S.Footer>
     </>
   );
 }

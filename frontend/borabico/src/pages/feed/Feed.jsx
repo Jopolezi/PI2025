@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import * as S from "./styledFeed";
 import { CardFeed } from "@/components/feed/card/CardFeed";
 import { Search, SlidersHorizontal } from "lucide-react";
-import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import Select from "react-select";
 import { category } from "@/data/category";
+import axios from "axios";
 
 export default function Feed() {
   useEffect(() => {
@@ -13,6 +13,40 @@ export default function Feed() {
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [appliedCategory, setAppliedCategory] = useState(null);
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get("http://localhost:3000/api/post");
+        setPosts(response.data.data || []);
+      } catch (error) {
+        console.error("Erro ao carregar o post", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+
+  const filteredPosts = posts.filter((post) => {
+    const matchesSearch = post.title.toLowerCase().includes(search.toLowerCase());
+    const matchesCategory = appliedCategory 
+      ? post.category === appliedCategory.value 
+      : true;
+    
+    return matchesSearch && matchesCategory;
+  });
+
+  const handleApplyFilter = () => {
+    setAppliedCategory(selectedCategory);
+    setIsOpen(false);
+  };
 
   return (
     <>
@@ -29,68 +63,52 @@ export default function Feed() {
 
             <S.Search>
               <S.Group>
-                <S.SearchInput type="text" placeholder="Busque uma vaga" />
+                <S.SearchInput
+                  type="text"
+                  placeholder="Busque uma vaga"
+                  onChange={(e) => setSearch(e.target.value)}
+                />
                 <S.SearchIcon>
                   <Search />
                 </S.SearchIcon>
               </S.Group>
 
               <S.Filters>
-                <DropdownMenu.Root
-                  open={isOpen}
-                  onOpenChange={setIsOpen}
-                  modal={false}
-                >
-                  <DropdownMenu.Trigger asChild>
-                    <S.FilterButton>
-                      <SlidersHorizontal size={20} />
-                    </S.FilterButton>
-                  </DropdownMenu.Trigger>
+                <S.FilterButton onClick={() => setIsOpen(!isOpen)}>
+                  <SlidersHorizontal size={20} />
+                </S.FilterButton>
 
-                  <DropdownMenu.Portal>
-                    <S.FiltersContent
-                      onPointerDownOutside={(e) => {
-                        if (e.target.closest(".react-select"))
-                          e.preventDefault();
-                      }}
-                      onInteractOutside={(e) => {
-                        if (e.target.closest(".react-select"))
-                          e.preventDefault();
-                      }}
-                    >
-                      <DropdownMenu.Item onSelect={(e) => e.preventDefault()}>
-                        <S.FilterSection>
-                            <S.FilterTitle>Filtros de categoria</S.FilterTitle>
-                            <S.Divider />
-                            <S.FilterLabel>Categoria</S.FilterLabel>
-                          <S.SelectWrapper>
-                            <Select
-                              options={category}
-                              value={selectedCategory}
-                              onChange={setSelectedCategory}
-                              classNamePrefix="react-select"
-                              placeholder="Selecione a categoria"
-                              isSearchable={true}
-                              isClearable={true}
-                              noOptionsMessage={() =>
-                                "Nenhuma opção encontrada"
-                              }
-                            />
-                          </S.SelectWrapper>
+                {isOpen && (
+                  <S.FilterMenu>
+                    <S.FilterTitle>Filtrar por categoria</S.FilterTitle>
 
-                          <S.Confirm>Aplicar</S.Confirm>
-                        </S.FilterSection>
-                      </DropdownMenu.Item>
-                    </S.FiltersContent>
-                  </DropdownMenu.Portal>
-                </DropdownMenu.Root>
+                    <S.SelectWrapper>
+                      <Select
+                        options={category}
+                        value={selectedCategory}
+                        onChange={setSelectedCategory}
+                        classNamePrefix="react-select"
+                        placeholder="Selecione a categoria"
+                        isSearchable={true}
+                        isClearable={true}
+                        noOptionsMessage={() => "Nenhuma opção encontrada"}
+                      />
+                    </S.SelectWrapper>
+
+                    <S.Confirm onClick={handleApplyFilter}>
+                      Aplicar
+                    </S.Confirm>
+                  </S.FilterMenu>
+                )}
               </S.Filters>
             </S.Search>
           </S.Flex>
           <S.Divider />
 
           <S.JobsGrid>
-            <CardFeed />
+            {filteredPosts.map((post) => (
+              <CardFeed key={post.id} post={post} />
+            ))}
           </S.JobsGrid>
         </S.Content>
       </S.Container>

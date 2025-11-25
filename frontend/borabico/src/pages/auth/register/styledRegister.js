@@ -4,6 +4,7 @@ import * as C from "../../../styles/colors";
 import * as S from "../../../styles/styledComponents";
 
 export const Container = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
@@ -12,53 +13,27 @@ export const Container = styled.div`
   overflow: hidden;
 `;
 
-export const Header = styled.header`
+export const ShapeTop = styled.div`
+  position: absolute;
   width: 100%;
-  max-width: 100%;
-  padding: 0 4%;
-  background: ${C.colors.offwhite};
-  flex-shrink: 0;
-
-  @media (max-width: 480px) {
-    padding: 4px 4%;
-  }
+  height: 280px;
+  top: 0;
+  right: 0;
+  background: ${C.colors.red};
+  z-index: 0;
+  clip-path: path("M0 130Q200 280 400 200T800 500L800 300 0 300Z");
+  transform: rotate(180deg);
 `;
 
-export const ContainerLogo = styled(Link)`
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  color: ${C.colors.dark};
-  text-decoration: none;
-`;
-
-export const Logo = styled.img`
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-
-  @media (max-width: 480px) {
-    width: 56px;
-    height: 56px;
-  }
-`;
-
-export const LogoText = styled.h2`
-  ${S.font};
-  font-weight: 800;
-  font-size: 1.1rem;
-  color: ${C.colors.dark};
-  margin: 0;
-  pointer-events: none;
-  user-select: none;
-
-  @media (max-width: 480px) {
-    font-size: 2rem;
-  }
-`;
-
-export const Span = styled.span`
-  color: ${C.colors.red};
+export const ShapeBottom = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 280px;
+  bottom: 0;
+  left: 0;
+  background: ${C.colors.red};
+  z-index: 0;
+  clip-path: path("M0 130Q200 280 400 200T800 500L800 300 0 300Z");
 `;
 
 export const Content = styled.div`
@@ -69,14 +44,14 @@ export const Content = styled.div`
   padding: 2rem 4%;
   flex: 1;
   justify-content: center;
+  z-index: 1;
 `;
 
 export const Title = styled.h1`
   ${S.font};
   font-weight: 600;
   font-size: 1.8rem;
-  color: ${C.colors.darkGray};
-  margin: 0 0 1rem 0;
+  color: ${C.colors.dark};
 
   @media (max-width: 768px) {
     font-size: 1.6rem;
@@ -93,7 +68,7 @@ export const Form = styled.form`
   width: 100%;
   max-width: 600px;
   background: ${C.colors.white};
-  padding: 1.5rem;
+  padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   gap: 1rem;
@@ -113,7 +88,7 @@ export const Form = styled.form`
 export const InputContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+  gap: 0.5rem;
 
   @media (max-width: 480px) {
     grid-template-columns: 1fr;
@@ -129,19 +104,53 @@ export const FullWidthRow = styled.div`
   flex-direction: column;
 `;
 
-export const StrengthMeterTitle = styled.label`
+export const PasswordVerify = styled.div`
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const PasswordVerifyTitle = styled.label`
   ${S.font};
   font-weight: 500;
   font-size: 0.85rem;
   color: ${C.colors.dark};
-  margin-bottom: 0.5rem;
-`
+
+  @media (max-width: 480px) {
+    font-size: 1rem;
+  }
+`;
+
+export const PasswordRule = styled.p`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+
+  color: ${(props) =>
+    props.isValid ? `${C.colors.green}` : `${C.colors.gray}`};
+  transition: 0.3s ease;
+`;
 
 export const Flex = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   width: 100%;
   gap: 0.5rem;
+`;
+
+export const Visibility = styled.button`
+  position: absolute;
+  display: flex;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: ${C.colors.gray};
 `;
 
 export const InputContent = styled.div`
@@ -173,6 +182,30 @@ export const InputError = styled.p`
 
   @media (max-width: 480px) {
     font-size: 0.7rem;
+  }
+`;
+
+export const TermsAndConditions = styled.p`
+  ${S.font};
+  font-weight: 500;
+  font-size: 12px;
+  color: ${C.colors.gray};
+  padding-left: 10px;
+
+  @media (max-width: 480px) {
+    font-size: 1rem;
+  }
+`;
+
+export const TCLink = styled(Link)`
+  ${S.font};
+  font-weight: 500;
+  font-size: 12px;
+  color: ${C.colors.red};
+  text-decoration: underline;
+
+  @media (max-width: 480px) {
+    font-size: 1rem;
   }
 `;
 
@@ -228,80 +261,20 @@ export const Login = styled(Link)`
   text-decoration: underline;
 `;
 
-export const Footer = styled.footer`
-  width: 100%;
-  min-height: 40px;
-  max-width: 100%;
-  padding: 8px 4%;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  background: ${C.colors.offwhite};
-  color: ${C.colors.gray};
-  flex-shrink: 0;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    gap: 4px;
-    text-align: center;
-    padding: 6px 4%;
-    min-height: 35px;
-  }
-
-  @media (max-width: 480px) {
-    padding: 4px 4%;
-    min-height: 30px;
-  }
-`;
-
-export const FooterText = styled.p`
-  ${S.font};
-  font-weight: 400;
-  font-size: 0.65rem;
-  pointer-events: none;
-  user-select: none;
-  margin: 0;
-
-  @media (max-width: 480px) {
-    font-size: 0.6rem;
-  }
-`;
-
-export const FooterLinks = styled.div`
-  font-size: 0.65rem;
-  display: flex;
-  gap: 12px;
-
-  @media (max-width: 480px) {
-    gap: 8px;
-    font-size: 0.6rem;
-  }
-
-  a {
-    color: ${C.colors.gray};
-    text-decoration: none;
-    ${S.font};
-    font-weight: 400;
-    transition: color 0.55s ease;
-
-    &:hover {
-      color: ${C.colors.dark};
-    }
-  }
-`;
-
 export const SelectWrapper = styled.div`
   .react-select__control {
     width: 100%;
     padding: 0px;
     margin: 0;
-    border: 2px solid ${props => props.error ? C.colors.red : C.colors.input};
+    border: 2px solid
+      ${(props) => (props.error ? C.colors.red : C.colors.input)};
     border-radius: 20px;
     box-shadow: none;
     transition: all 0.5s;
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
-    background: ${props => props.error ? 'rgba(239, 68, 68, 0.5)' : C.colors.white};
+    background: ${(props) =>
+      props.error ? "rgba(239, 68, 68, 0.5)" : C.colors.white};
 
     &:hover,
     &.react-select__control--is-focused {

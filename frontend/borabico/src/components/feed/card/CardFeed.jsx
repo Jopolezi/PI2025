@@ -12,26 +12,10 @@ import {
 } from "lucide-react";
 import { category } from "@/data/category";
 
-export function CardFeed() {
+export function CardFeed( { post }) {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState(false);
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get("http://localhost:3000/api/post");
-        setPosts(response.data.data || []);
-      } catch (error) {
-        console.error("Erro ao carregar o post", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPosts();
-  }, []);
 
   const getCategoryLabel = (value) => {
     const cat = category.find((c) => c.value === value);
@@ -98,7 +82,6 @@ export function CardFeed() {
           <SC.NFText>Nenhuma publicação encontrada</SC.NFText>
         </SC.NotFound>
       ) : (
-        posts.map((post) => (
           <SC.Card key={post.id}>
             <SC.Header>
               <SC.Profile to={`/perfil/${post.user?.id}`}>
@@ -194,7 +177,6 @@ export function CardFeed() {
               <SendHorizontal size={18} /> Candidate-se
             </SC.View>
           </SC.Card>
-        ))
       )}
     </>
   );

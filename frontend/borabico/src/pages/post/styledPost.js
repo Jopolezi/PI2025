@@ -306,6 +306,13 @@ export const Button = styled.a`
   text-decoration: none;
   transition: all 0.3s;
   cursor: pointer;
+
+  &:hover {
+      box-shadow:
+      inset 0 0 15px 5px rgba(0, 0, 0, 0.1), 
+      inset 0 0 10px rgba(0, 0, 0, 0.1); 
+  }
+    }
 `;
 
 export const OwnerActions = styled.div`
@@ -315,11 +322,18 @@ export const OwnerActions = styled.div`
 `;
 
 export const Edit = styled(Button)`
-  background: ${C.colors.gray};
+  background-color: ${C.colors.gray};
+  color: ${C.colors.white};
+`;
+
+export const Save = styled(Button)`
+  background-color: ${C.colors.green};
+  color: ${C.colors.white};
 `;
 
 export const Delete = styled(Button)`
-  background: ${C.colors.red};
+  background-color: ${C.colors.red};
+  color: ${C.colors.white};
 `;
 
 export const Form = styled.form`
@@ -357,7 +371,7 @@ export const Input = styled.input`
   outline: none;
   padding: 12px;
   border: 2px solid ${C.colors.input};
-  border-radius: 8px;
+  border-radius: 20px;
   font-family: "Poppins", sans-serif;
   font-size: 16px;
   color: ${C.colors.dark};
@@ -379,7 +393,7 @@ export const TextArea = styled.textarea`
   outline: none;
   padding: 12px;
   border: 2px solid ${C.colors.input};
-  border-radius: 8px;
+  border-radius: 20px;
   font-family: "Poppins", sans-serif;
   font-size: 16px;
   color: ${C.colors.dark};
@@ -392,7 +406,7 @@ export const SelectWrapper = styled.div`
     padding: 0px;
     margin: 0;
     border: 2px solid ${C.colors.input};
-    border-radius: 8px;
+    border-radius: 20px;
     box-shadow: none;
     transition: all 0.5s;
     box-sizing: border-box;
@@ -488,5 +502,40 @@ export const ImportantTitle = styled.span`
 
 export const ImportantDescription = styled.span`
   font-size: 0.85rem;
+  color: ${C.colors.gray};
+`;
+
+export const SubmitContainer = styled.div`
+  margin-top: 20px;
+  display: flex;
+  width: 100%;
+  gap: 10px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+`;
+
+export const SubmitTextbox = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`;
+
+export const SubmitTitle = styled.p`
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  color: ${C.colors.dark};
+`;
+
+export const SubmitSubtitle = styled.p`
+  font-size: 0.85rem;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
   color: ${C.colors.gray};
 `;

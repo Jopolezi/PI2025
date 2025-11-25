@@ -261,7 +261,7 @@ function Post() {
                   <SC.Input
                     type="date"
                     min={new Date().toISOString().split("T")[0]}
-                    {...field} 
+                    {...field}
                   />
                 )}
               />
@@ -303,15 +303,22 @@ function Post() {
               </SC.ImportantDescription>
             </SC.Important>
 
-            <SC.OwnerActions>
-              <SC.Edit type="submit">
-                <SquarePen size={16} /> Salvar alterações
-              </SC.Edit>
+            <SC.SubmitContainer>
+              <SC.SubmitTextbox>
+                <SC.SubmitTitle>Pronto para alterar as informações?</SC.SubmitTitle>
+                <SC.SubmitSubtitle>Isso irá alterar as informações atuais da publicação</SC.SubmitSubtitle>
+              </SC.SubmitTextbox>
 
-              <SC.Delete type="button" onClick={() => setEditing(false)}>
-                <Trash2 size={16} /> Cancelar
-              </SC.Delete>
-            </SC.OwnerActions>
+              <SC.OwnerActions>
+                <SC.Save type="submit" onClick={saveEdit}>
+                  <SquarePen size={16} /> Salvar alterações
+                </SC.Save>
+
+                <SC.Delete type="button" onClick={() => setEditing(false)}>
+                  <Trash2 size={16} /> Cancelar
+                </SC.Delete>
+              </SC.OwnerActions>
+            </SC.SubmitContainer>
           </SC.Form>
         ) : (
           <>
