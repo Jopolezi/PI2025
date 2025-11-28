@@ -305,12 +305,16 @@ function Post() {
 
             <SC.SubmitContainer>
               <SC.SubmitTextbox>
-                <SC.SubmitTitle>Pronto para alterar as informações?</SC.SubmitTitle>
-                <SC.SubmitSubtitle>Isso irá alterar as informações atuais da publicação</SC.SubmitSubtitle>
+                <SC.SubmitTitle>
+                  Pronto para alterar as informações?
+                </SC.SubmitTitle>
+                <SC.SubmitSubtitle>
+                  Isso irá alterar as informações atuais da publicação
+                </SC.SubmitSubtitle>
               </SC.SubmitTextbox>
 
               <SC.OwnerActions>
-                <SC.Save type="submit" onClick={saveEdit}>
+                <SC.Save type="submit">
                   <SquarePen size={16} /> Salvar alterações
                 </SC.Save>
 
@@ -353,7 +357,7 @@ function Post() {
               <SC.Data>
                 <CircleDollarSign size={14} /> Pagamento
               </SC.Data>
-              <SC.Payment>Por {post.payment}</SC.Payment>
+              <SC.Payment>{post.payment}</SC.Payment>
             </SC.Group>
 
             <SC.Group>
@@ -361,7 +365,7 @@ function Post() {
                 <DollarSign size={14} /> Valor oferecido
               </SC.Data>
               <SC.Value>
-                R${" "}
+                R$
                 {post.value ?? "Valor não informado, combine com o anunciante"}
               </SC.Value>
             </SC.Group>

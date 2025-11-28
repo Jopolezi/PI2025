@@ -146,8 +146,8 @@ function usePost() {
 
       const editData = {
         ...data,
-        category: data.category?.value || data.category,
-        payment: data.payment?.value || data.payment,
+        category: data.category?.label || data.category,
+        payment: data.payment?.label || data.payment,
       };
 
       const response = await axios.put(

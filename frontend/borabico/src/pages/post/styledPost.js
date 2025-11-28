@@ -290,7 +290,7 @@ export const Answer = styled.p`
   margin-bottom: 20px;
 `;
 
-export const Button = styled.a`
+export const Button = styled.button`
   ${SC.flexCenter};
   width: fit-content;
   gap: 5px;?
